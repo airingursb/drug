@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            药品
+        </ion-title>
+        <ion-buttons end="">
+            <button (click)="addDrug()">
+                <ion-icon name="add">
+                </ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="drug">
+    <ion-card *ngFor="let drug of drugs">
+
+        <ion-item>
+            <ion-avatar item-left>
+                <img src="{{drug.drugImage}}">
+            </ion-avatar>
+            <h2>{{drug.drugName}}</h2>
+            <ion-icon *ngIf="drug.drugId==2" danger item-right name="close-circle"></ion-icon>
+            <ion-icon *ngIf="drug.drugBad" warn item-right name="alert"></ion-icon>
+        </ion-item>
+
+        <img src="http://qiniu.ursb.me/image/drug-image.jpg">
+        <ion-item>
+            <ion-row>
+                <ion-col>
+                    <button primary clear small (click)="wantRoom(drug)">
+                        <ion-icon name="medkit"></ion-icon>
+                        <div>{{drug.drugRoom}}</div>
+                    </button>
+                </ion-col>
+                <ion-col>
+                    <button primary clear small (click)="updateRoom(drug)">
+                        <ion-icon name="time"></ion-icon>
+                        <div>{{drug.drugUpdateTime}}</div>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+    </ion-card>
+</ion-content>
