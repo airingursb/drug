@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>基于C/S闭环控制的智能药柜系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/cayman.css">
+</head>
+
+<body>
+
+<section class="page-header">
+    <h1 class="project-name">基于C/S闭环控制的智能药柜系统</h1>
+    <h2 class="project-tagline">Developed by Ionic &amp; JavaEE, Published on aliyun EMS &amp; DaoCloud</h2>
+    <a href="http://github.com/airingursb/drug" class="btn">View on GitHub</a>
+    <a href="http://github.com/airingursb/drug/archive/master.zip" class="btn">Download .zip</a>
+</section>
+
+<section class="main-content">
+
+    <h1 id="toc_0">“智能药柜”上位机技术文档</h1>
+
+    <h2 id="toc_1">一、技术框架</h2>
+
+    <ul>
+        <li>前端：Angular2（ionic2）</li>
+        <li>后端：JavaEE（Sturts2 + Hibernate）</li>
+        <li>服务器环境：JDK7 + Tomcat7 + MySQL</li>
+        <li>部署环境：Docker（Ubuntu 系统环境，Docker 虚拟化，Apache 官方 Tomcat7 镜像）</li>
+    </ul>
+
+    <h2 id="toc_2">二、前端架构</h2>
+
+    <h3 id="toc_3">2-1 简介</h3>
+
+    <p>框架采用基于 Angular2 的 ionic2 框架（注：ionic 更新较快，开发该项目时版本为 v2 beta32），支持的开发语言为基于 es6 的 typescript，开发过程中所使用的编辑器为 WebStorm
+        (version 16.02)。</p>
+
+    <p>调试环境为 Chrome 52，搭配浏览器跨域插件 Allow-Control-Allow-Origin。</p>
+
+    <h3 id="toc_4">2-2 模块与功能</h3>
+
+    <p>主要分为三大模块：病号模块、药品模块、病例模块，对应于 UI tab 栏从左到右每个 tab。</p>
+
+    <h4 id="toc_5">2-2-1 病号模块</h4>
+
+    <blockquote>
+        <p>注：以下所有 Android 端 Screenshot 取自 Galaxy S5，iOS 端 Screenshot 取自 iPhone 5。</p>
+    </blockquote>
+
+    <ol>
+        <li>能够展示用户的基本信息，包括头像、姓名、简介、手机号。</li>
+        <li>能够通过点击右下角的按钮，可以跳转至添加病号界面</li>
+        <li>能够点击每个病号右侧的黄色小药箱按钮，打开对应病号的所有药箱</li>
+    </ol>
+
+    <p>Android 端 UI 如图：<br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m1-android.png-h600.jpg" alt=""/><br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m2-android.png-h600.jpg" alt=""/><br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m3-android.png-h600.jpg" alt=""/></p>
+
+    <p>iOS 端 UI 如图：<br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m1-ios.png-h600.jpg" alt=""/><br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m2-ios.png-h600.jpg" alt=""/><br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m3-ios.png-h600.jpg" alt=""/></p>
+
+    <h4 id="toc_6">2-2-2 药品模块</h4>
+
+    <ol>
+        <li>能够展示药品的基本信息，包括药品照片、药品名、药品所在药柜、药品更新日期、药品状态</li>
+        <li>每个药品右侧的图标表明了药品的状态，如果是黄色警告图标，代表药品环境不达标，如果是红色警告图标，代表药品过期，亟需更新</li>
+        <li>点击每个药品卡片左下角的药柜图标，可以打开相应的药柜</li>
+        <li>点击右上角的添加按钮，可以调转至添加药品界面</li>
+    </ol>
+
+    <p>Android 端 UI 如图：<br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m4-android.png-h600.jpg" alt=""/><br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m5-android.png-h600.jpg" alt=""/></p>
+
+    <p>iOS 端 UI 如图：<br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m4-ios.png-h600.jpg" alt=""/><br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m5-ios.png-h600.jpg" alt=""/></p>
+
+    <h4 id="toc_7">2-2-3 病例模块</h4>
+
+    <ol>
+        <li>列表呈现病例信息，包括每条病例对应的病号、药品、开病例的时间</li>
+        <li>左划病例，点击红色叉号按钮，可以删除病例</li>
+        <li>左划病例，点击蓝色钥匙按钮，可以打开对应病例所需药品的药柜</li>
+    </ol>
+
+    <p>Android 端 UI 如图：<br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m6-android.png-h600.jpg" alt=""/><br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m7-android.png-h600.jpg" alt=""/></p>
+
+    <p>iOS 端 UI 如图：<br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m6-ios.png-h600.jpg" alt=""/><br/>
+        <img src="http://airing.ursb.me/image/drug/drug-m7-ios.png-h600.jpg" alt=""/></p>
+
+    <h2 id="toc_8">三、服务端架构</h2>
+
+    <h3 id="toc_9">3-1 简介</h3>
+
+    <p>服务端采用 JavaEE 的框架 Struts2 与 Hibernate，开发语言为 Java，开发所使用的 IDE 为 MyEclipse 2015 CI。数据库选用 MySQL，数据库管理工具使用
+        PHPAdmin，设计工具使用 MySQLWorkbench。</p>
+
+    <p>服务器环境为 JDK7 + Tomcat7 + MySQL5.6，部署于阿里云 ECS 上，操作系统为 Ubuntu。结合国内 Docker 云平台 DaoCloud 使用，采用 Apache 官方 Tomcat7
+        镜像。</p>
+
+    <p>客户端与服务端通信使用 HTTP 协议 GET方式，文本格式为 JSON。</p>
+
+    <h3 id="toc_10">3-2 数据字典</h3>
+
+    <p>药品信息：</p>
+
+    <ol>
+        <li>药品ID</li>
+        <li>药品名称</li>
+        <li>药品对应的柜号</li>
+        <li>药品添加时间</li>
+        <li>药品更新时间</li>
+        <li>药品是否过期</li>
+    </ol>
+
+    <hr/>
+
+    <p>病号信息：</p>
+
+    <ol>
+        <li>病号ID</li>
+        <li>病号姓名</li>
+        <li>病号看病时间</li>
+        <li>病号年龄</li>
+        <li>病号手机号</li>
+    </ol>
+
+    <hr/>
+
+    <p>病例信息：</p>
+
+    <ol>
+        <li>病例ID</li>
+        <li>病号ID</li>
+        <li>药品ID</li>
+        <li>所需药品质量</li>
+        <li>是否取药</li>
+        <li>取药时间</li>
+    </ol>
+
+    <h3 id="toc_11">3-3 E-R图</h3>
+
+    <p><img src="http://airing.ursb.me/2016-07-12-14682981908862.jpg" alt=""/></p>
+
+    <h3 id="toc_12">3-4 接口设计</h3>
+
+    <p>接口路由配置如下（struts.xml）： </p>
+
+    <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE struts PUBLIC &quot;-//Apache Software Foundation//DTD Struts Configuration 2.1//EN&quot; &quot;http://struts.apache.org/dtds/struts-2.1.dtd&quot;&gt;
+&lt;struts&gt;
+&lt;package name=&quot;default&quot; extends=&quot;struts-default&quot;&gt;
+    &lt;action name=&quot;open_room&quot; class=&quot;com.drug.action.OpenRoomAction&quot;&gt;&lt;/action&gt;
+    &lt;action name=&quot;bad_room&quot; class=&quot;com.drug.action.BadRoomAction&quot;&gt;&lt;/action&gt;
+    &lt;action name=&quot;update_room&quot; class=&quot;com.drug.action.UpdateDrugAction&quot;&gt;&lt;/action&gt;
+    &lt;action name=&quot;patient_room&quot; class=&quot;com.drug.action.PatientRoomsAction&quot;&gt;&lt;/action&gt;
+
+
+    &lt;action name=&quot;home_page&quot; class=&quot;com.drug.action.HomePageAction&quot;&gt;&lt;/action&gt;
+    &lt;action name=&quot;drug_page&quot; class=&quot;com.drug.action.DrugPageAction&quot;&gt;&lt;/action&gt;
+    &lt;action name=&quot;case_page&quot; class=&quot;com.drug.action.CasePageAction&quot;&gt;&lt;/action&gt;
+    &lt;action name=&quot;add_patient&quot; class=&quot;com.drug.action.AddPatientAction&quot;&gt;&lt;/action&gt;
+    &lt;action name=&quot;add_drug&quot; class=&quot;com.drug.action.AddDrugAction&quot;&gt;&lt;/action&gt;
+    &lt;action name=&quot;add_case&quot; class=&quot;com.drug.action.AddCaseAction&quot;&gt;&lt;/action&gt;
+
+    &lt;action name=&quot;want_room&quot; class=&quot;com.drug.action.WantRoomAction&quot;&gt;&lt;/action&gt;
+    &lt;action name=&quot;ask_room&quot; class=&quot;com.drug.action.AskRoomAction&quot;&gt;&lt;/action&gt;
+&lt;/package&gt;
+&lt;/struts&gt;
+</code></pre>
+
+    <ol>
+        <li>open_room 接口：开柜接口，用于客户端申请开柜，格式略。</li>
+        <li>bad_room 接口：硬件警告接口，用于通知药品过期警告与环境警告，格式如下。</li>
+        <li>update_room 接口：更新药柜接口，格式略。</li>
+        <li>patient_room 接口：根据病号开柜接口，用户客户端申请通过病号开柜，格式略。</li>
+        <li>home_page 接口：首页接口，返回病号列表信息，格式略。</li>
+        <li>drug_page 接口：药品页面接口，返回药品列表信息，格式略。</li>
+        <li>case_page 接口：病例页面接口，返回病例列表信息，格式略。</li>
+        <li>add_patient 接口：添加病号接口，用于客户端添加病号，格式略。</li>
+        <li>add_drug 接口：添加药品接口，用于客户端添加药品，格式略。</li>
+        <li>add_case 接口：添加病例接口，用于客户端添加病例，格式略。</li>
+        <li>want_room 接口：硬件申请开柜接口，用于向硬件端申请开柜的接口，详情如下。</li>
+        <li>ask_room 接口：硬件循问接口，用于硬件端轮询服务端是否开柜，详情如下。</li>
+    </ol>
+
+    <p><strong>这里详细说明硬件端与服务端通信的有关接口的通信格式。</strong></p>
+
+    <ol>
+        <li><p>过期警报接口（bad_room）</p>
+
+            <ul>
+                <li>接口url：<a href="http://localhost:8080/drug/bad_room.action">http://localhost:8080/drug/bad_room.action</a>
+                </li>
+                <li>参数：药品id（drugId）</li>
+                <li>返回：status</li>
+            </ul>
+        </li>
+        <li><p>开柜申请接口（want_room）</p>
+
+            <ul>
+                <li>接口url：<a href="http://localhost:8080/drug/want_room.action">http://localhost:8080/drug/want_room.action</a>
+                </li>
+                <li>参数：药品id（drugId）</li>
+                <li>返回：status</li>
+            </ul>
+        </li>
+        <li><p>开柜轮询接口（ask_room）</p>
+
+            <ul>
+                <li>接口url：<a href="http://localhost:8080/drug/ask_room.action">http://localhost:8080/drug/ask_room.action</a>
+                </li>
+                <li>参数：药品id（drugId）</li>
+                <li>返回：status，drugRooms</li>
+            </ul>
+        </li>
+    </ol>
+
+    <blockquote>
+        <p>status：200，OK；500，失败。<br/>
+            drugRooms：字符串数组，申请开柜的柜号。</p>
+    </blockquote>
+    <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/airingursb/drug">Drug</a> is maintained by <a
+                href="http://ursb.me">Airing</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a
+                href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a
+                href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+    </footer>
+</section>
+</body>
+
+
+</html>
