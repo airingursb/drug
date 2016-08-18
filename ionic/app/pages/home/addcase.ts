@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, Alert, Platform, Toast, Modal, NavParams, ViewController} from 'ionic-angular';
+import {NavController, Alert, Platform, Toast, Modal, NavParams, ViewController, Storage, LocalStorage} from 'ionic-angular';
 import {Http} from "@angular/http";
 
 @Component({
@@ -9,14 +9,18 @@ import {Http} from "@angular/http";
 export class AddCasePage {
 
     casess:any;
+    host:any;
     drugs:any;
     patient:any;
+    local: Storage;
 
     constructor(private navController:NavController,
                 private viewController:ViewController,
                 private platform:Platform,
                 private http:Http,
                 private navParams:NavParams) {
+
+        this.local = new Storage(LocalStorage);
 
         this.casess = {};
         this.casess.drugname = "";
@@ -29,18 +33,22 @@ export class AddCasePage {
     }
 
     onPageWillEnter() {
-        this.http.get("http://localhost:8080/drug/drug_page.action?pageNum=1")
-            .subscribe(data => {
-                console.log(data.json());
-                if (data.json().status == "200") {
-                    console.log("200");
-                    this.drugs = data.json().drugPageData;
-                } else {
-                    console.log("400");
-                }
-            }, error => {
-                console.log("500");
-            });
+        this.local.get('host').then((result) => {
+            this.host = result;
+            this.http.get(this.host + "drug_page.action?pageNum=1")
+                .subscribe(data => {
+                    console.log(data.json());
+                    if (data.json().status == "200") {
+                        console.log("200");
+                        this.drugs = data.json().drugPageData;
+                    } else {
+                        console.log("400");
+                    }
+                }, error => {
+                    console.log("500");
+                });
+        });
+
     }
 
     dismiss() {
@@ -61,7 +69,7 @@ export class AddCasePage {
                 {
                     text: '确定',
                     handler: () => {
-                        this.http.get("http://localhost:8080/drug/add_case.action?drugId=" + drug.drugId
+                        this.http.get(this.host + "add_case.action?drugId=" + drug.drugId
                             + "&patientId=" + this.patient.patientId)
                             .subscribe(data => {
                                 console.log(data.json());

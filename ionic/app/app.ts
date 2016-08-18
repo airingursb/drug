@@ -10,7 +10,7 @@ import {TabsPage} from './pages/tabs/tabs';
 export class MyApp {
 
     private rootPage:any;
-    local: Storage;
+    local:Storage;
 
     constructor(private platform:Platform) {
         this.rootPage = TabsPage;
@@ -21,7 +21,7 @@ export class MyApp {
             // Here you can do any higher level native things you might need.
             // this.local.set('host', 'http://localhost:8080/drug/');
             // this.local.set('host', 'http://121.42.195.113/drug/');
-            this.local.set('host', 'http://localhost:8080/drug/');
+            this.local.set('host', 'http://121.42.195.113/drug/');
             StatusBar.styleDefault();
         });
     }
