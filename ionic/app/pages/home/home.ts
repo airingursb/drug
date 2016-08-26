@@ -5,29 +5,30 @@ import {AddCasePage} from '../home/addcase';
 import {Http} from "@angular/http";
 
 @Component({
-	templateUrl: 'build/pages/home/home.html'
+    templateUrl: 'build/pages/home/home.html'
 })
+
 export class HomePage {
 
     host:any;
     patients:any;
-    local: Storage;
+    local:Storage;
 
-	constructor(
-		private navController: NavController, 
-		private viewController:ViewController,
-		private platform: Platform,
-		private http: Http) {
+    constructor(private navController:NavController,
+                private viewController:ViewController,
+                private platform:Platform,
+                private http:Http) {
 
         this.local = new Storage(LocalStorage);
 
-		this.patients = [
-			{ "patientId": 1, "patientName": "Airing", "patientTime": "2016-6-30" }
-		];
-		
-	}
+        this.patients = [
+            {"patientId": 1, "patientName": "Airing", "patientTime": "2016-6-30"}
+        ];
+
+    }
 
     onPageWillEnter() {
+
         this.local.get('host').then((result) => {
             this.host = result;
             this.http.get(this.host + "home_page.action?pageNum=1")
@@ -45,18 +46,18 @@ export class HomePage {
         });
     }
 
-	addPatient() {
-		let modalAddPatientPage = Modal.create(AddPatientPage);
-    	this.navController.present(modalAddPatientPage);
-	}
+    addPatient() {
+        let modalAddPatientPage = Modal.create(AddPatientPage);
+        this.navController.present(modalAddPatientPage);
+    }
 
     enterCase(patient) {
         this.navController.push(AddCasePage, {
             item: patient
         });
-	}
+    }
 
-	openRooms(patient) {
+    openRooms(patient) {
         this.local.get('host').then((result) => {
             this.host = result;
             this.http.get(this.host + "patient_room.action?patientId=" + patient.patientId)

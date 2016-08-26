@@ -20,7 +20,7 @@ export class DrugPage {
         this.local = new Storage(LocalStorage);
 
         this.drugs = [
-            {"drugId": 1, "drugName": "板蓝根", "drugRoom": "A500", "drugUpdateTime": "2016-1-20", "drugBad": "false"}
+            {"drugId": 1, "drugName": "板蓝根", "drugRoom": "A500", "drugUpdateTime": "2016-1-20", "drugBad": "false", "drugBadBad": "false"}
         ];
     }
 

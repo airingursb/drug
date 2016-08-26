@@ -20,11 +20,11 @@
                 <img src="{{drug.drugImage}}">
             </ion-avatar>
             <h2>{{drug.drugName}}</h2>
-            <ion-icon *ngIf="drug.drugId==2" danger item-right name="close-circle"></ion-icon>
+            <ion-icon *ngIf="drug.drugBadBad" danger item-right name="close-circle"></ion-icon>
             <ion-icon *ngIf="drug.drugBad" warn item-right name="alert"></ion-icon>
         </ion-item>
 
-        <img src="http://airing.ursb.me/image/drug-image.jpg">
+        <img src="http://airing.ursb.me/image/drug-image-{{drug.drugId}}.jpg">
         <ion-item>
             <ion-row>
                 <ion-col>
